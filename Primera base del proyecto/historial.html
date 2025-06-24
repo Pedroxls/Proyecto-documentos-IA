@@ -4,14 +4,44 @@
   <meta charset="UTF-8">
   <title>Historial de Resúmenes</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="container">
-    <h1>Historial de Resúmenes</h1>
+    <h1>Sintetizador de Archivos</h1>
+    <p id="usuario-nombre"></p>
+
+    <h2>Historial de Resúmenes</h2>
     <ul id="historial">
-      <!-- Aquí se insertarían los resúmenes en el futuro -->
+      <!-- Aquí se insertarían los resúmenes -->
     </ul>
-    <a href="resumen.html">← Volver</a>
+
+    <div class="acciones">
+      <a href="resumen.html">← Volver al resumen</a> |
+      <a href="index.html">🚪 Cerrar sesión</a>
+    </div>
   </div>
+
+  <script src="script.js"></script>
+  <script>
+    // Mostrar nombre de usuario arriba del historial
+    const usuario = localStorage.getItem('usuario') || "Alumno";
+    const saludo = document.getElementById('usuario-nombre');
+    if (saludo) saludo.innerText = `Mostrando historial de: ${usuario}`;
+
+    // Mostrar historial de resúmenes
+    const historial = JSON.parse(localStorage.getItem('historial')) || [];
+    const contenedor = document.getElementById('historial');
+
+    if (contenedor && historial.length > 0) {
+      historial.reverse().forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = `<strong>${item.fecha}</strong><br>${item.resumen}`;
+        contenedor.appendChild(li);
+      });
+    } else if (contenedor) {
+      contenedor.innerHTML = "<p>No hay resúmenes generados todavía.</p>";
+    }
+  </script>
 </body>
 </html>
