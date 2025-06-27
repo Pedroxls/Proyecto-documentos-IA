@@ -1,35 +1,133 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f1f1f1;
-  padding: 20px;
+/* Fondo con imagen para el login */
+body:not(.resumen) {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: url('https://rdlparquitectos.com//media/3339/biblioteca-tec.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
 }
 
-.container {
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: auto;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+/* Fondo técnico para resumen.html */
+body.resumen {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-image: url('https://media.istockphoto.com/id/1413790486/es/foto/fondo-abstracto-azul-oscuro-sat%C3%A9n-de-seda-color-azul-marino-fondo-elegante.jpg?s=612x612&w=0&k=20&c=YLVaBJOXnjFmH6IYGQa2h_Rj2wcTj4TiiGlLA9tInOc=');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-input {
+.login-container {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 40px;
+  border-radius: 12px;
+  width: 320px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  color: #fff;
+  text-align: center;
+}
+
+.logo {
+  width: 100px;
+  margin-bottom: 15px;
+}
+
+h2 {
+  margin-bottom: 25px;
+  font-weight: 600;
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group .icon {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+  width: 20px;
+  opacity: 0.6;
+}
+
+.input-group input {
   width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  font-size: 16px;
+  padding: 10px 10px 10px 35px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 button {
-  margin-top: 20px;
-  padding: 10px 20px;
-  font-size: 16px;
-  background: #4CAF50;
-  color: white;
+  width: 100%;
+  padding: 12px;
+  background: #0073e6;
   border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 6px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 button:hover {
-  background: #45a049;
+  background: #005ec4;
+}
+
+.links {
+  margin-top: 15px;
+  font-size: 12px;
+}
+
+.links a {
+  color: #ddd;
+  text-decoration: none;
+}
+/* Estilos para el contenedor de botones */
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Estilos para los enlaces de acción */
+.acciones a {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Efecto al pasar el cursor */
+.acciones a:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+/* Ícono a la izquierda del texto */
+.icono-link {
+  width: 20px;
+  height: 20px;
+  margin-right: 4px;
+  filter: brightness(0) invert(1); /* opcional para íconos oscuros sobre fondo oscuro */
+  transition: transform 0.2s;
+}
+
+.acciones a:hover .icono-link {
+  transform: scale(1.1);
 }

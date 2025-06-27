@@ -2,17 +2,40 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Generar Resumen</title>
+  <title>Sintetizador de Archivos</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
-<body>
-  <div class="container">
-    <h1>Generar Resumen</h1>
-    <button onclick="generarResumen()">🔄 Generar resumen</button>
-    <p id="salida"></p>
-    <a href="historial.html">Ver historial</a>
+<body class="resumen">
+  <div class="dashboard-container">
+    <h1>Sintetizador de Archivos</h1>
+    <p class="usuario">Bienvenido, <span id="bienvenida">Usuario</span></p>
+
+    <button class="resumen-btn">📄 Generar resumen</button>
+
+    <div class="resumen-box">
+      <h2>Resumen generado:</h2>
+      <pre id="salida">— Aún no se ha generado ningún resumen —</pre>
+    </div>
+
+    <div class="acciones">
+      <a href="historial.html">
+        <img src="https://cdn-icons-png.freepik.com/512/32/32223.png" alt="Historial" class="icono-link">
+        Ver historial
+      </a>
+      <a href="index.html">
+        <img src="https://cdn-icons-png.flaticon.com/512/182/182448.png" alt="Cerrar sesión" class="icono-link">
+        Cerrar sesión
+      </a>
+    </div>
   </div>
 
   <script src="script.js"></script>
+  <script>
+    const usuario = localStorage.getItem('usuario') || "Usuario";
+    document.getElementById("bienvenida").innerText = usuario;
+
+    document.querySelector('.resumen-btn').onclick = generarResumen;
+  </script>
 </body>
 </html>
