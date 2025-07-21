@@ -1,36 +1,32 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Sintetizador de Archivos</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Inicio de sesión</title>
+  <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
   <div class="login-container">
-    <div class="login-box">
-      <img src="https://play-lh.googleusercontent.com/vrF-AZYxvsh6T3Y-_iHV7EdUJIGon4MRUgC5xB8nwr5hPJXaMJ01lMclCUeR9yILVkg" alt="Logo" class="logo">
-      <h2>Sintetizador de Archivos</h2>
+    <img src="https://cdn-icons-png.flaticon.com/512/1077/1077114.png" alt="Logo" class="logo">
+    <h2>Acceso para Profesores / Admins</h2>
 
-      <div class="input-group">
-        <img src="https://e7.pngegg.com/pngimages/178/595/png-clipart-user-profile-computer-icons-login-user-avatars-monochrome-black-thumbnail.png" class="icon">
-        <input type="text" placeholder="Matrícula o usuario">
-      </div>
+    <div class="input-group">
+      <input type="text" id="correo" placeholder="Correo institucional" />
+    </div>
 
-      <div class="input-group">
-        <img src="https://png.pngtree.com/png-vector/20190115/ourmid/pngtree-vector-lock-icon-png-image_318067.jpgpri" class="icon">
-        <input type="password" placeholder="Contraseña">
-      </div>
+    <div class="input-group">
+      <input type="password" id="password" placeholder="Contraseña" />
+    </div>
 
-      <button onclick="iniciarSesion()">Ingresar</button>
+    <button onclick="iniciarSesion()">Iniciar sesión</button>
 
-      <div class="links">
-        <a href="#">¿Olvidaste tu contraseña?</a> |
-        <a href="#">¿Necesitas ayuda?</a>
-      </div>
+    <div class="links">
+      <p>Solo personal autorizado</p>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
