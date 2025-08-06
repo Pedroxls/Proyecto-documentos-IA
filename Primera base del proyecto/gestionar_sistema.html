@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administración del Sistema</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="resumen">
+    <div class="login-container" style="width: 90%; max-width: 800px;">
+        <h2>⚙️ Administración del Sistema</h2>
+        <p>Desde aquí puedes gestionar los usuarios y la configuración general.</p>
+
+        <div class="acciones" style="flex-direction: column; gap: 15px; align-items: stretch;">
+            <a href="gestionar_profesores.html">
+                👨‍🏫 Gestionar Profesores
+            </a>
+            <a href="#" onclick="alert('Funcionalidad futura: Gestionar Alumnos')">
+                🧑‍🎓 Gestionar Alumnos
+            </a>
+            <a href="#" onclick="alert('Funcionalidad futura: Ver Logs del Sistema')">
+                📜 Ver Historial de Acciones
+            </a>
+        </div>
+
+        <div class="acciones" style="margin-top: 30px;">
+            <a href="dashboard.html">← Volver al Dashboard</a>
+        </div>
+    </div>
+    <script>
+        // Script de seguridad para asegurar que solo los admins puedan ver esta página
+        const rol = localStorage.getItem("rol");
+        if (rol !== 'admin') {
+            alert("Acceso denegado. Esta área es solo para administradores.");
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
