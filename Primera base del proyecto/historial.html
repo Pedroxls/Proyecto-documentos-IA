@@ -2,45 +2,108 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Historial de Resúmenes</title>
+  <title>Historial de Reportes</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos para una mejor presentación de la lista */
+    .container {
+        background: rgba(0, 0, 0, 0.75);
+        padding: 40px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 800px;
+        color: #fff;
+    }
+    #historial {
+        list-style-type: none;
+        padding: 0;
+        margin-top: 20px;
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+    #historial li {
+        background-color: rgba(255, 255, 255, 0.1);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        border-left: 5px solid #00aaff;
+    }
+    #historial li strong {
+        color: #00aaff;
+        font-size: 1.1em;
+    }
+  </style>
 </head>
-<body>
+<body class="resumen">
   <div class="container">
-    <h1>Sintetizador de Archivos</h1>
-    <p id="usuario-nombre"></p>
+    <h1>Historial de Reportes</h1>
+    <p id="usuario-nombre">Cargando historial...</p>
 
-    <h2>Historial de Resúmenes</h2>
     <ul id="historial">
-      <!-- Aquí se insertarían los resúmenes -->
-    </ul>
+      </ul>
 
     <div class="acciones">
-      <a href="resumen.html">← Volver al resumen</a> |
-      <a href="index.html">🚪 Cerrar sesión</a>
+      <a id="volver-link" href="#">← Volver al panel</a> |
+      <a href="#" onclick="cerrarSesion()">🚪 Cerrar sesión</a>
     </div>
   </div>
 
-  <script src="script.js"></script>
   <script>
-    // Mostrar nombre de usuario arriba del historial
-    const usuario = localStorage.getItem('usuario') || "Alumno";
+    // --- LÓGICA ACTUALIZADA PARA CARGAR DATOS REALES DEL BACKEND ---
+
+    // 1. Verificar sesión al cargar la página
+    const usuarioId = localStorage.getItem('usuario_id');
+    const rol = localStorage.getItem('rol');
+
+    if (!usuarioId || !rol) {
+        alert("Acceso no autorizado. Inicia sesión primero.");
+        window.location.href = "index.html";
+    }
+
+    // 2. Configurar el enlace de "Volver" según el rol
+    const volverLink = document.getElementById('volver-link');
+    if (rol === 'alumno') {
+        volverLink.href = 'panel_alumno.html';
+    } else {
+        volverLink.href = 'dashboard.html';
+    }
+
     const saludo = document.getElementById('usuario-nombre');
-    if (saludo) saludo.innerText = `Mostrando historial de: ${usuario}`;
+    saludo.innerText = `Mostrando historial para el usuario ID: ${usuarioId}`;
 
-    // Mostrar historial de resúmenes
-    const historial = JSON.parse(localStorage.getItem('historial')) || [];
-    const contenedor = document.getElementById('historial');
+    // 3. Usar fetch para pedir el historial al backend
+    // Usamos el endpoint que ya existe en tu app.py
+    fetch(`http://127.0.0.1:5000/api/historial/${usuarioId}`)
+        .then(res => {
+            if (!res.ok) {
+                throw new Error('No se pudo cargar el historial desde el servidor.');
+            }
+            return res.json();
+        })
+        .then(historial => {
+            const contenedor = document.getElementById('historial');
+            contenedor.innerHTML = ''; // Limpiar el contenedor por si acaso
 
-    if (contenedor && historial.length > 0) {
-      historial.reverse().forEach(item => {
-        const li = document.createElement('li');
-        li.innerHTML = `<strong>${item.fecha}</strong><br>${item.resumen}`;
-        contenedor.appendChild(li);
-      });
-    } else if (contenedor) {
-      contenedor.innerHTML = "<p>No hay resúmenes generados todavía.</p>";
+            if (historial.length > 0) {
+                historial.forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<strong>Semana ${item.semana} - ${item.fecha_envio}</strong><br><p>${item.actividades_realizadas}</p>`;
+                    contenedor.appendChild(li);
+                });
+            } else {
+                contenedor.innerHTML = "<p>No hay reportes registrados en la base de datos para este usuario.</p>";
+            }
+        })
+        .catch(err => {
+            console.error("Error al cargar el historial:", err);
+            const contenedor = document.getElementById('historial');
+            contenedor.innerHTML = `<p>Error: ${err.message}</p>`;
+        });
+
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "index.html";
     }
   </script>
 </body>

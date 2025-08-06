@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel del Alumno</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="resumen">
+  <div class="login-container" style="width: 500px;">
+    <h2>Panel del Alumno</h2>
+    <p id="bienvenida">Cargando...</p>
+    <hr style="border-color: #555; margin: 20px 0;">
+    
+    <h3>Acciones Disponibles</h3>
+    <div class="acciones">
+      <a href="definicion_proyecto_final.html">
+        <img src="https://cdn-icons-png.flaticon.com/512/1086/1086377.png" class="icono-link" />Llenar Definición de Proyecto
+      </a>
+      <a href="historial.html">
+        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="icono-link" />Ver Mi Historial
+      </a>
+    </div>
+
+    <div class="acciones" style="margin-top: 30px;">
+        <a href="#" onclick="cerrarSesion()">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" class="icono-link" />Cerrar sesión
+        </a>
+    </div>
+  </div>
+
+  <script>
+    const usuarioId = localStorage.getItem("usuario_id");
+    const rol = localStorage.getItem("rol");
+
+    if (!usuarioId || !rol) {
+      alert("Acceso no autorizado. Inicia sesión primero.");
+      window.location.href = "index.html";
+    } else {
+      // No necesitamos un nombre real aún, el rol es suficiente
+      document.getElementById("bienvenida").innerText = "¡Bienvenido!";
+    }
+
+    function cerrarSesion() {
+      localStorage.clear();
+      window.location.href = "index.html";
+    }
+  </script>
+</body>
+</html>

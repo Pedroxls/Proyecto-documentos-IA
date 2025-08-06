@@ -3,43 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
+  <title>Dashboard de Seguimiento</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Estilos para el nuevo dashboard */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 30px; }
+    .stat-card { background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 10px; text-align: center; }
+    .stat-card h3 { margin: 0; font-size: 1.2em; color: #00aaff; }
+    .stat-card p { font-size: 2.5em; font-weight: 600; margin: 10px 0 0 0; }
+    .table-container { width: 100%; overflow-x: auto; }
+    .estancias-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .estancias-table th, .estancias-table td { padding: 15px; border-bottom: 1px solid #555; }
+    .estancias-table th { background-color: rgba(0, 115, 230, 0.2); }
+    .estancias-table tr:hover { background-color: rgba(255, 255, 255, 0.05); }
+    .admin-button { background-color: #ffc107; color: #111; }
+    .admin-button:hover { background-color: #e0a800; }
+  </style>
 </head>
 <body class="resumen">
-  <div class="login-container">
-    <h2>Panel Principal</h2>
-    <p id="bienvenida"></p>
+  <div class="login-container" style="width: 90%; max-width: 1000px;">
+    <h2>Dashboard de Seguimiento</h2>
+    <p id="bienvenida">Cargando...</p>
 
-    <div class="acciones">
-      <a href="resumen.html">
-        <img src="https://cdn-icons-png.flaticon.com/512/2099/2099192.png" class="icono-link" />Resumen</a>
+    <!-- Tarjetas de Estadísticas -->
+    <div class="dashboard-grid">
+      <div class="stat-card"><h3>Estancias Activas</h3><p id="stat-activas">0</p></div>
+      <div class="stat-card"><h3>Reportes Pendientes</h3><p id="stat-pendientes">0</p></div>
+      <div class="stat-card"><h3>Alertas</h3><p id="stat-alertas">0</p></div>
+    </div>
 
-      <a href="historial.html">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828911.png" class="icono-link" />Historial</a>
+    <!-- Tabla de Estancias -->
+    <h3>Proyectos en Curso</h3>
+    <div class="table-container">
+      <table class="estancias-table">
+        <thead>
+          <tr><th>Alumno</th><th>Proyecto</th><th>Acciones</th></tr>
+        </thead>
+        <tbody id="lista-estancias">
+          <tr><td colspan="3" style="text-align:center;">Cargando datos...</td></tr>
+        </tbody>
+      </table>
+    </div>
 
-      <a href="#" onclick="cerrarSesion()">
-        <img src="https://cdn-icons-png.flaticon.com/512/1828/1828479.png" class="icono-link" />Cerrar sesión</a>
+    <div class="acciones" style="justify-content: space-between; margin-top: 30px;" id="acciones-footer">
+        <a href="definicion_proyecto_final.html">➕ Registrar Nueva Estancia</a>
+        <!-- El botón de admin se insertará aquí si corresponde -->
+        <a href="#" onclick="cerrarSesion()">Cerrar Sesión 🚪</a>
     </div>
   </div>
 
   <script>
-    // Verificar si hay sesión activa
     const usuarioId = localStorage.getItem("usuario_id");
     const rol = localStorage.getItem("rol");
 
-    if (!usuarioId || !rol) {
-      alert("Acceso no autorizado. Inicia sesión primero.");
+    if (!usuarioId || !rol || rol === 'alumno') {
       window.location.href = "index.html";
-    } else {
-      const bienvenida = document.getElementById("bienvenida");
-      bienvenida.innerText = `Bienvenido (${rol})`;  // ejemplo: Bienvenido (admin)
+    }
+
+    document.getElementById("bienvenida").innerText = `Bienvenido, ${rol.charAt(0).toUpperCase() + rol.slice(1)}`;
+    
+    // Si el usuario es admin, añadir el botón de "Administrar Sistema"
+    if (rol === 'admin') {
+        const footerAcciones = document.getElementById('acciones-footer');
+        const adminButton = document.createElement('a');
+        adminButton.href = 'gestionar_sistema.html'; // Página futura de administración
+        adminButton.className = 'admin-button';
+        adminButton.innerHTML = '⚙️ Administrar Sistema';
+        footerAcciones.insertBefore(adminButton, footerAcciones.lastElementChild);
+    }
+
+    // --- Lógica para poblar el dashboard con datos REALES ---
+    function cargarDashboard() {
+        // Usamos fetch para pedir los datos al endpoint que creamos en app.py
+        fetch(`http://127.0.0.1:5000/api/dashboard/data?rol=${rol}&id=${usuarioId}`)
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error('No se pudo cargar la información del dashboard.');
+                }
+                return res.json();
+            })
+            .then(data => {
+                // Actualizar tarjetas de estadísticas
+                document.getElementById("stat-activas").innerText = data.estadisticas.activas;
+                document.getElementById("stat-pendientes").innerText = data.estadisticas.pendientes;
+                document.getElementById("stat-alertas").innerText = data.estadisticas.alertas;
+
+                // Poblar la tabla de estancias
+                const tbody = document.getElementById("lista-estancias");
+                tbody.innerHTML = ''; // Limpiar la tabla
+
+                if (data.lista_estancias.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align:center;">No hay estancias registradas.</td></tr>';
+                    return;
+                }
+
+                data.lista_estancias.forEach(estancia => {
+                    const tr = document.createElement('tr');
+                    // NOTA: Hemos simplificado la tabla para esta versión final
+                    tr.innerHTML = `
+                        <td>${estancia.nombre_alumno}</td>
+                        <td>${estancia.nombre_proyecto}</td>
+                        <td><a href="historial.html?alumno_id=${estancia.id}">Ver Detalles</a></td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            })
+            .catch(err => {
+                console.error("Error al cargar datos del dashboard:", err);
+                const tbody = document.getElementById("lista-estancias");
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">Error al cargar los datos.</td></tr>`;
+            });
     }
 
     function cerrarSesion() {
       localStorage.clear();
       window.location.href = "index.html";
     }
+
+    // Cargar los datos cuando la página esté lista
+    document.addEventListener("DOMContentLoaded", cargarDashboard);
   </script>
 </body>
 </html>

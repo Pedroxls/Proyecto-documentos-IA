@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Definición del Proyecto (Versión Final)</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+        body.resumen { height: auto; padding: 40px 0; }
+        .form-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.6);
+            color: #fff;
+            text-align: left;
+        }
+        .form-container h2, .form-container .form-intro { text-align: center; }
+        fieldset {
+            border: 1px solid #555;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            padding: 25px;
+        }
+        legend {
+            padding: 0 15px;
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #00aaff;
+        }
+        .input-group { margin-bottom: 20px; }
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .input-group small {
+            display: block;
+            color: #ccc;
+            margin-top: -5px;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        .input-group input[type="text"],
+        .input-group input[type="date"],
+        .input-group input[type="file"],
+        .input-group textarea,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box;
+            background: #f0f0f0;
+            color: #333;
+        }
+        .input-group textarea { min-height: 120px; resize: vertical; }
+        .restricciones-table { width: 100%; text-align: center; border-collapse: collapse; margin-top: 15px; }
+        .restricciones-table th, .restricciones-table td { padding: 12px; border: 1px solid #555; }
+        .restricciones-table th { background-color: rgba(0, 115, 230, 0.3); }
+        .restricciones-table td:first-child { text-align: left; font-weight: bold; }
+        .radio-options label { margin-right: 20px; }
+    </style>
+</head>
+<body class="resumen">
+    <div class="form-container">
+        <h2>Definición del Proyecto</h2>
+        <p class="form-intro">Réplica exacta del formulario en PDF, incluyendo todas las secciones.</p>
+
+        <form id="form-definicion-proyecto">
+
+            <fieldset>
+                <div class="input-group">
+                    <label for="nombre_alumno">1. Nombre del alumno *</label>
+                    <input type="text" id="nombre_alumno" name="nombre_alumno" required />
+                </div>
+                <div class="input-group">
+                    <label for="nombre_proyecto">2. Nombre del proyecto *</label>
+                    <input type="text" id="nombre_proyecto" name="nombre_proyecto" required />
+                </div>
+                <div class="input-group">
+                    <label for="lider_proyecto">3. Nombre del líder del proyecto *</label>
+                    <input type="text" id="lider_proyecto" name="lider_proyecto" required />
+                </div>
+                <div class="input-group">
+                    <label for="area_empresarial">4. Área empresarial *</label>
+                    <input type="text" id="area_empresarial" name="area_empresarial" required />
+                </div>
+                <div class="input-group">
+                    <label for="fecha_elaboracion">5. Fecha de elaboración</label>
+                    <input type="date" id="fecha_elaboracion" name="fecha_elaboracion" required />
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>FORMALIZACIÓN DEL PROYECTO</legend>
+                <div class="input-group">
+                    <label for="justificacion">6. Justificación o propósito *</label>
+                    <textarea id="justificacion" name="justificacion" required></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>DESCRIPCIÓN DEL PROYECTO</legend>
+                <div class="input-group">
+                    <label for="antecedentes_desc">7. Antecedentes *</label>
+                    <textarea id="antecedentes_desc" name="antecedentes_desc" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="descripcion_problema">8. Descripción del problema *</label>
+                    <textarea id="descripcion_problema" name="descripcion_problema" required></textarea>
+                </div>
+                <div class="input-group">
+                    <label for="situacion_problema">9. Situación problema actual *</label>
+                    <textarea id="situacion_problema" name="situacion_problema" required></textarea>
+                </div>
+                 <div class="input-group">
+                    <label for="expectativas_proyecto">10. Expectativas del proyecto *</label>
+                    <textarea id="expectativas_proyecto" name="expectativas_proyecto" required></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>ENTREGABLES FINALES</legend>
+                <div class="input-group">
+                    <label for="productos_entregar">11. Productos por entregar del proyecto *</label>
+                    <small>Satisfaciendo lo que el proyecto demande.</small>
+                    <textarea id="productos_entregar" name="productos_entregar" required></textarea>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>ALCANCE DEL ÁREA DE TRABAJO</legend>
+                 <div class="input-group">
+                    <label for="antecedentes_area">12. Antecedentes del área de trabajo</label>
+                    <textarea id="antecedentes_area" name="antecedentes_area"></textarea>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Restricciones</legend>
+                <div class="input-group">
+                    <label>13. Indica el nivel de impacto de cada restricción (Alta, Media, Baja o Nula). *</label>
+                    <table class="restricciones-table">
+                        <thead><tr><th>Restricción</th><th>Alta</th><th>Media</th><th>Baja</th><th>Nula</th></tr></thead>
+                        <tbody>
+                            <tr><td>Costos</td><td><input type="radio" name="restriccion_costos" value="alta" required></td><td><input type="radio" name="restriccion_costos" value="media"></td><td><input type="radio" name="restriccion_costos" value="baja"></td><td><input type="radio" name="restriccion_costos" value="nula"></td></tr>
+                            <tr><td>Recursos materiales</td><td><input type="radio" name="restriccion_materiales" value="alta" required></td><td><input type="radio" name="restriccion_materiales" value="media"></td><td><input type="radio" name="restriccion_materiales" value="baja"></td><td><input type="radio" name="restriccion_materiales" value="nula"></td></tr>
+                            <tr><td>Recursos humanos</td><td><input type="radio" name="restriccion_humanos" value="alta" required></td><td><input type="radio" name="restriccion_humanos" value="media"></td><td><input type="radio" name="restriccion_humanos" value="baja"></td><td><input type="radio" name="restriccion_humanos" value="nula"></td></tr>
+                            <tr><td>Tiempo disponible</td><td><input type="radio" name="restriccion_tiempo" value="alta" required></td><td><input type="radio" name="restriccion_tiempo" value="media"></td><td><input type="radio" name="restriccion_tiempo" value="baja"></td><td><input type="radio" name="restriccion_tiempo" value="nula"></td></tr>
+                            <tr><td>Calidad esperada</td><td><input type="radio" name="restriccion_calidad" value="alta" required></td><td><input type="radio" name="restriccion_calidad" value="media"></td><td><input type="radio" name="restriccion_calidad" value="baja"></td><td><input type="radio" name="restriccion_calidad" value="nula"></td></tr>
+                            <tr><td>Alcance definido</td><td><input type="radio" name="restriccion_alcance" value="alta" required></td><td><input type="radio" name="restriccion_alcance" value="media"></td><td><input type="radio" name="restriccion_alcance" value="baja"></td><td><input type="radio" name="restriccion_alcance" value="nula"></td></tr>
+                            <tr><td>Riesgos externos</td><td><input type="radio" name="restriccion_riesgos" value="alta" required></td><td><input type="radio" name="restriccion_riesgos" value="media"></td><td><input type="radio" name="restriccion_riesgos" value="baja"></td><td><input type="radio" name="restriccion_riesgos" value="nula"></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fases del proyecto (1)</legend>
+                <div class="input-group"><label for="fase1_nombre">14. Nombre de la fase</label><small>Ej. Planeación, ejecución, cierre</small><input type="text" id="fase1_nombre" name="fase1_nombre"></div>
+                <div class="input-group"><label for="fase1_descripcion">15. Descripción *</label><small>Describe las actividades clave de esta fase</small><textarea id="fase1_descripcion" name="fase1_descripcion" required></textarea></div>
+                <div class="input-group"><label for="fase1_duracion">16. Duración *</label><small>Ej. 2 semanas, o del 1 al 14 de julio</small><input type="text" id="fase1_duracion" name="fase1_duracion" required></div>
+                <div class="input-group"><label for="fase1_entregable">17. Entregable de la fase *</label><small>¿Qué entregará esta fase al final?</small><input type="text" id="fase1_entregable" name="fase1_entregable" required></div>
+                <div class="input-group"><label for="fase1_criterio_exito">18. Criterio de éxito a verificar (por fase) *</label><small>¿Cómo sabrás que se cumplió exitosamente esta fase?</small><input type="text" id="fase1_criterio_exito" name="fase1_criterio_exito" required></div>
+                <div class="input-group"><label for="fase1_recomendacion">19. ¿Qué probabilidades hay de que nos recomiende a un amigo o compañero? *</label><select id="fase1_recomendacion" name="fase1_recomendacion" required><option value="" disabled selected>Selecciona una opción</option><script>for(let i=0;i<=10;i++)document.write(`<option value="${i}">${i}</option>`);</script></select></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tareas del proyecto (Bloque 1)</legend>
+                <div class="input-group"><label>20. Fase correspondiente *</label><div class="radio-options"><input type="radio" id="tarea1_fase1" name="tarea1_fase" value="Fase 1" required><label for="tarea1_fase1">Fase 1</label><input type="radio" id="tarea1_fase2" name="tarea1_fase" value="Fase 2"><label for="tarea1_fase2">Fase 2</label><input type="radio" id="tarea1_fase3" name="tarea1_fase" value="Fase 3"><label for="tarea1_fase3">Fase 3</label></div></div>
+                <div class="input-group"><label for="tarea1_nombre">21. Tarea *</label><small>Ej. Redacción del informe, reunión inicial, etc.</small><input type="text" id="tarea1_nombre" name="tarea1_nombre" required></div>
+                <div class="input-group"><label for="tarea1_entregable">22. Entregable de tarea *</label><small>¿Qué producto o resultado generará esta tarea?</small><textarea id="tarea1_entregable" name="tarea1_entregable" required></textarea></div>
+                <div class="input-group"><label for="tarea1_criterio_exito">23. Criterio de éxito a verificar *</label><small>¿Cómo sabrás que se hizo bien esta tarea?</small><textarea id="tarea1_criterio_exito" name="tarea1_criterio_exito" required></textarea></div>
+                <div class="input-group"><label for="tarea1_fecha_inicio">24. Fecha inicial *</label><input type="date" id="tarea1_fecha_inicio" name="tarea1_fecha_inicio" required></div>
+                <div class="input-group"><label for="tarea1_fecha_fin">25. Fecha final *</label><input type="date" id="tarea1_fecha_fin" name="tarea1_fecha_fin" required></div>
+                <div class="input-group"><label for="tarea1_responsable">26. Responsable de la tarea *</label><small>Nombre del encargado</small><input type="text" id="tarea1_responsable" name="tarea1_responsable" required></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fases del proyecto (2)</legend>
+                <div class="input-group"><label for="fase2_nombre">27. Nombre de la fase</label><input type="text" id="fase2_nombre" name="fase2_nombre"></div>
+                <div class="input-group"><label for="fase2_descripcion">28. Descripción *</label><textarea id="fase2_descripcion" name="fase2_descripcion" required></textarea></div>
+                <div class="input-group"><label for="fase2_duracion">29. Duración *</label><input type="text" id="fase2_duracion" name="fase2_duracion" required></div>
+                <div class="input-group"><label for="fase2_entregable">30. Entregable de la fase *</label><input type="text" id="fase2_entregable" name="fase2_entregable" required></div>
+                <div class="input-group"><label for="fase2_criterio_exito">31. Criterio de éxito a verificar (por fase) *</label><input type="text" id="fase2_criterio_exito" name="fase2_criterio_exito" required></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tareas del proyecto (Bloque 2)</legend>
+                <div class="input-group"><label>32. Fase correspondiente *</label><div class="radio-options"><input type="radio" id="tarea2_fase1" name="tarea2_fase" value="Fase 1" required><label for="tarea2_fase1">Fase 1</label><input type="radio" id="tarea2_fase2" name="tarea2_fase" value="Fase 2"><label for="tarea2_fase2">Fase 2</label><input type="radio" id="tarea2_fase3" name="tarea2_fase" value="Fase 3"><label for="tarea2_fase3">Fase 3</label></div></div>
+                <div class="input-group"><label for="tarea2_nombre">33. Tarea *</label><input type="text" id="tarea2_nombre" name="tarea2_nombre" required></div>
+                <div class="input-group"><label for="tarea2_entregable">34. Entregable de tarea *</label><textarea id="tarea2_entregable" name="tarea2_entregable" required></textarea></div>
+                <div class="input-group"><label for="tarea2_criterio_exito">35. Criterio de éxito a verificar *</label><textarea id="tarea2_criterio_exito" name="tarea2_criterio_exito" required></textarea></div>
+                <div class="input-group"><label for="tarea2_fecha_inicio">36. Fecha inicial *</label><input type="date" id="tarea2_fecha_inicio" name="tarea2_fecha_inicio" required></div>
+                <div class="input-group"><label for="tarea2_fecha_fin">37. Fecha final *</label><input type="date" id="tarea2_fecha_fin" name="tarea2_fecha_fin" required></div>
+                <div class="input-group"><label for="tarea2_responsable">38. Responsable de la tarea *</label><input type="text" id="tarea2_responsable" name="tarea2_responsable" required></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Fases del proyecto (3)</legend>
+                <div class="input-group"><label for="fase3_nombre">39. Nombre de la fase</label><input type="text" id="fase3_nombre" name="fase3_nombre"></div>
+                <div class="input-group"><label for="fase3_descripcion">40. Descripción *</label><textarea id="fase3_descripcion" name="fase3_descripcion" required></textarea></div>
+                <div class="input-group"><label for="fase3_duracion">41. Duración *</label><input type="text" id="fase3_duracion" name="fase3_duracion" required></div>
+                <div class="input-group"><label for="fase3_entregable">42. Entregable de la fase *</label><input type="text" id="fase3_entregable" name="fase3_entregable" required></div>
+                <div class="input-group"><label for="fase3_criterio_exito">43. Criterio de éxito a verificar (por fase) *</label><input type="text" id="fase3_criterio_exito" name="fase3_criterio_exito" required></div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Tareas del proyecto (Bloque 3)</legend>
+                <div class="input-group"><label>44. Fase correspondiente *</label><div class="radio-options"><input type="radio" id="tarea3_fase1" name="tarea3_fase" value="Fase 1" required><label for="tarea3_fase1">Fase 1</label><input type="radio" id="tarea3_fase2" name="tarea3_fase" value="Fase 2"><label for="tarea3_fase2">Fase 2</label><input type="radio" id="tarea3_fase3" name="tarea3_fase" value="Fase 3"><label for="tarea3_fase3">Fase 3</label></div></div>
+                <div class="input-group"><label for="tarea3_nombre">45. Tarea *</label><input type="text" id="tarea3_nombre" name="tarea3_nombre" required></div>
+                <div class="input-group"><label for="tarea3_entregable">46. Entregable de tarea *</label><textarea id="tarea3_entregable" name="tarea3_entregable" required></textarea></div>
+                <div class="input-group"><label for="tarea3_criterio_exito">47. Criterio de éxito a verificar *</label><textarea id="tarea3_criterio_exito" name="tarea3_criterio_exito" required></textarea></div>
+                <div class="input-group"><label for="tarea3_fecha_inicio">48. Fecha inicial *</label><input type="date" id="tarea3_fecha_inicio" name="tarea3_fecha_inicio" required></div>
+                <div class="input-group"><label for="tarea3_fecha_fin">49. Fecha final *</label><input type="date" id="tarea3_fecha_fin" name="tarea3_fecha_fin" required></div>
+                <div class="input-group"><label for="tarea3_responsable">50. Responsable de la tarea *</label><input type="text" id="tarea3_responsable" name="tarea3_responsable" required></div>
+            </fieldset>
+
+             <fieldset>
+                <legend>Descripción del impacto de las actividades en la empresa</legend>
+                 <div class="input-group">
+                    <label for="impacto_actividades">51. Describe cómo impactan las actividades en los procesos, resultados o áreas de la empresa.</label>
+                    <small>Explica su relevancia dentro del contexto profesional.</small>
+                    <textarea id="impacto_actividades" name="impacto_actividades"></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Cronograma</legend>
+                 <div class="input-group">
+                    <label for="diagrama">52. Diagrama</label>
+                    <small>Sube el cronograma, diagrama de Gantt o alguna representación de tiempos que resume las fases y tareas del proyecto.</small>
+                    <input type="file" id="diagrama" name="diagrama" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.png,.jpeg">
+                </div>
+            </fieldset>
+
+            <div style="text-align: center; margin-top: 30px;">
+                 <button type="submit" style="padding: 15px 30px; font-size: 1.2em;">Enviar Definición de Proyecto</button>
+            </div>
+        </form>
+        
+        <div class="acciones" style="margin-top: 30px; justify-content: center;">
+            <a href="dashboard.html">← Volver al panel</a>
+        </div>
+    </div>
+
+    <script>
+    // Se ejecuta cuando el usuario hace clic en el botón "Enviar"
+    document.getElementById('form-definicion-proyecto').addEventListener('submit', function(event) {
+        // Previene que la página se recargue
+        event.preventDefault();
+        
+        const form = event.target;
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // --- Vinculación de IDs (¡Importante!) ---
+        // Tomamos el ID del alumno que ha iniciado sesión desde el localStorage.
+        const alumnoId = localStorage.getItem('usuario_id');
+        if (!alumnoId) {
+            alert("Error: No se ha encontrado un ID de alumno. Por favor, inicie sesión de nuevo.");
+            return;
+        }
+        data.alumno_id = alumnoId;
+
+        // NOTA: El ID del profesor supervisor debería asignarse de alguna forma.
+        // Por ahora, usamos un valor de ejemplo (1). Esto se podrá mejorar después.
+        data.profesor_id = 1; 
+
+        console.log("Datos que se enviarán a la API:", data);
+
+        // Usamos fetch para enviar los datos al endpoint que creamos en app.py
+        fetch('http://127.0.0.1:5000/api/definicion_proyecto', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            if (!res.ok) {
+                return res.json().then(err => { throw new Error(err.error || 'Error desconocido del servidor') });
+            }
+            return res.json();
+        })
+        .then(response => {
+            alert(response.message); // Muestra el mensaje de éxito del backend
+            form.reset(); // Limpia el formulario
+        })
+        .catch(err => {
+            alert('Error al enviar el formulario: ' + err.message);
+        });
+    });
+</script>
