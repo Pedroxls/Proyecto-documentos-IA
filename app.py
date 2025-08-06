@@ -1,4 +1,4 @@
-# app.py (Versión actualizada con endpoint para el dashboard)
+# app.py (Versión Final del Proyecto)
 import sqlite3
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -7,11 +7,12 @@ from db_utils import insertar_alumno, consultar_historial_alumno
 app = Flask(__name__)
 CORS(app)
 
-
+# --- (Rutas existentes: /ping, /api/alumno, /api/historial, /api/login, /api/definicion_proyecto) ---
+# ... (El código de las rutas anteriores se mantiene igual) ...
 # Ruta de prueba para verificar que Flask está corriendo
 @app.route("/ping")
 def ping():
-    return jsonify({"message": "Flask está funcionando correctamente 🔥"})
+    return jsonify({"message": "Flask está funcionando correctamente "})
 
 # Ruta para insertar un alumno (POST)
 @app.route("/api/alumno", methods=["POST"])
@@ -137,7 +138,7 @@ def api_definicion_proyecto():
     finally:
         conn.close()
 
-# === NUEVO ENDPOINT PARA ALIMENTAR EL DASHBOARD DE PROFESORES/ADMINS ===
+# === ENDPOINT DEL DASHBOARD ACTUALIZADO Y MEJORADO ===
 @app.route("/api/dashboard/data", methods=["GET"])
 def get_dashboard_data():
     rol = request.args.get('rol')
@@ -148,32 +149,22 @@ def get_dashboard_data():
     cur = conn.cursor()
 
     try:
-        query = """
-            SELECT e.id, e.alumno_id, e.nombre_alumno, e.nombre_proyecto
-            FROM estancias e
-        """
+        query = "SELECT e.id, e.alumno_id, e.nombre_alumno, e.nombre_proyecto FROM estancias e"
         params = ()
         
-        # Si el usuario es un profesor, filtramos para que solo vea sus estancias asignadas
         if rol == 'profesor':
             query += " WHERE e.profesor_id = ?"
             params = (user_id,)
 
         cur.execute(query, params)
         estancias = [dict(row) for row in cur.fetchall()]
-
-        # Calcular estadísticas
+        
         total_estancias_activas = len(estancias)
-        # Lógica futura: calcular reportes pendientes y alertas basado en la tabla reportes_semanales
         reportes_pendientes = 0 
         alertas = 0
 
         dashboard_data = {
-            "estadisticas": {
-                "activas": total_estancias_activas,
-                "pendientes": reportes_pendientes,
-                "alertas": alertas
-            },
+            "estadisticas": {"activas": total_estancias_activas, "pendientes": reportes_pendientes, "alertas": alertas},
             "lista_estancias": estancias
         }
         
@@ -181,11 +172,35 @@ def get_dashboard_data():
         return jsonify(dashboard_data), 200
 
     except Exception as e:
-        print(f"Error al obtener datos para el dashboard: {e}")
-        if conn:
-            conn.close()
-        return jsonify({"error": "Ocurrió un error en el servidor"}), 500
+        if conn: conn.close()
+        return jsonify({"error": f"Error al obtener datos para el dashboard: {e}"}), 500
 
+# === ENDPOINTS COMPLETOS PARA GESTIÓN DE PROFESORES (EXCLUSIVO ADMIN) ===
+@app.route("/api/profesores", methods=["GET", "POST"])
+def gestionar_profesores():
+    conn = sqlite3.connect("seguimiento_estancias.db")
+    conn.row_factory = sqlite3.Row
+    cur = conn.cursor()
+
+    if request.method == "GET":
+        cur.execute("SELECT nombre, correo, departamento FROM profesores")
+        profesores = [dict(row) for row in cur.fetchall()]
+        conn.close()
+        return jsonify(profesores)
+
+    if request.method == "POST":
+        data = request.get_json()
+        try:
+            cur.execute(
+                "INSERT INTO profesores (nombre, correo, departamento, contraseña) VALUES (?, ?, ?, ?)",
+                (data['nombre'], data['correo'], data['departamento'], data['contraseña'])
+            )
+            conn.commit()
+            conn.close()
+            return jsonify({"message": "Profesor añadido con éxito."}), 201
+        except Exception as e:
+            conn.close()
+            return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

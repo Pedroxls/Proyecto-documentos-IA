@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestionar Profesores</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .gestion-container { display: grid; grid-template-columns: 1fr 2fr; gap: 30px; align-items: start; }
+        .form-card { background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; }
+        .lista-table { width: 100%; border-collapse: collapse; }
+        .lista-table th, .lista-table td { padding: 12px; border-bottom: 1px solid #555; text-align: left;}
+        .lista-table th { background-color: rgba(0, 115, 230, 0.2); }
+    </style>
+</head>
+<body class="resumen">
+    <div class="login-container" style="width: 90%; max-width: 1000px;">
+        <h2>👨‍🏫 Gestionar Profesores</h2>
+        
+        <div class="gestion-container">
+            <!-- Columna del Formulario -->
+            <div class="form-card">
+                <h3>Añadir Nuevo Profesor</h3>
+                <form id="form-profesor">
+                    <div class="input-group"><input type="text" id="nombre" placeholder="Nombre completo" required></div>
+                    <div class="input-group"><input type="email" id="correo" placeholder="Correo electrónico" required></div>
+                    <div class="input-group"><input type="text" id="departamento" placeholder="Departamento" required></div>
+                    <div class="input-group"><input type="password" id="password" placeholder="Contraseña" required></div>
+                    <button type="submit">Guardar Profesor</button>
+                </form>
+            </div>
+
+            <!-- Columna de la Lista -->
+            <div>
+                <h3>Profesores Registrados</h3>
+                <table class="lista-table">
+                    <thead><tr><th>Nombre</th><th>Correo</th><th>Departamento</th></tr></thead>
+                    <tbody id="lista-profesores">
+                        <tr><td colspan="3">Cargando...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="acciones" style="margin-top: 30px;">
+            <a href="gestionar_sistema.html">← Volver a Administración</a>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:5000";
+
+        // Cargar la lista de profesores al iniciar
+        function cargarProfesores() {
+            fetch(`${API_BASE}/api/profesores`)
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById('lista-profesores');
+                    tbody.innerHTML = '';
+                    if (data.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="3">No hay profesores registrados.</td></tr>';
+                    } else {
+                        data.forEach(prof => {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td>${prof.nombre}</td><td>${prof.correo}</td><td>${prof.departamento}</td>`;
+                            tbody.appendChild(tr);
+                        });
+                    }
+                });
+        }
+
+        // Enviar el formulario para crear un nuevo profesor
+        document.getElementById('form-profesor').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const data = {
+                nombre: document.getElementById('nombre').value,
+                correo: document.getElementById('correo').value,
+                departamento: document.getElementById('departamento').value,
+                contraseña: document.getElementById('password').value,
+            };
+
+            fetch(`${API_BASE}/api/profesores`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(res => res.json())
+            .then(response => {
+                alert(response.message);
+                document.getElementById('form-profesor').reset();
+                cargarProfesores(); // Recargar la lista
+            })
+            .catch(err => alert('Error al guardar el profesor.'));
+        });
+        
+        document.addEventListener("DOMContentLoaded", cargarProfesores);
+    </script>
+</body>
+</html>
